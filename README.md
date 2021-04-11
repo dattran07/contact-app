@@ -6,6 +6,6 @@ Postman collection: SingleStone - Contact App.postman_collection.json
 
 Available mock-up data:
 
-![contacts_table](https://user-images.githubusercontent.com/24969898/114278337-57939f00-99fd-11eb-875f-e36f69093c2d.png)
+![contacts_table](https://user-images.githubusercontent.com/24969898/114325322-7711f100-9afd-11eb-890f-7da328a9ac15.png)
 
-![contacts_phone_table](https://user-images.githubusercontent.com/24969898/114278345-64b08e00-99fd-11eb-8eb5-5ae8043f6af3.png)
+![contacts_phone_table](https://user-images.githubusercontent.com/24969898/114325323-7a0ce180-9afd-11eb-9f22-9a0693ff12f2.png)
