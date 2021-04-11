@@ -66,10 +66,10 @@ public class ContactServiceImpl implements ContactService {
 			}
 			
 			for(Phone phone : contact.getPhone()) {
-				CallList callList = new CallList();
-				callList.setName(name);
 				
 				if (phone.getType() != null && phone.getType().equals(Type.HOME) && StringUtils.isNotBlank(phone.getNumber())) {
+					CallList callList = new CallList();
+					callList.setName(name);
 					callList.setPhone(phone.getNumber());
 					resultList.add(callList);
 				}
