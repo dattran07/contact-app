@@ -1,0 +1,166 @@
+{
+	"info": {
+		"_postman_id": "f4a07623-8a3a-4979-946a-fd5c09e2f7dd",
+		"name": "SingleStone - Contact App",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "getContacts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/contacts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"contacts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getContactById",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/contacts/11",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"contacts",
+						"11"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "2",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getCallList",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/contacts/call-list",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"contacts",
+						"call-list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createContact",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": {\r\n        \"first\": \"Denys\",\r\n        \"middle\": \"Teodorico\",\r\n        \"last\": \"Gwinnett\"\r\n    },\r\n    \"address\": {\r\n        \"street\": \"749 Algoma Lane\",\r\n        \"city\": \"Buffalo\",\r\n        \"state\": \"New York\",\r\n        \"zip\": \"14220\"\r\n    },\r\n    \"phone\": [\r\n        {\r\n            \"number\": \"7716-825-0559\",\r\n            \"type\": \"0\"\r\n        },\r\n        {\r\n            \"number\": \"270-330-0883\",\r\n            \"type\": \"1\"\r\n        },\r\n        {\r\n            \"number\": \"617-858-2739\",\r\n            \"type\": \"2\"\r\n        }\r\n    ], \r\n    \"email\": \"smacanulty0@theatlantic.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/contacts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"contacts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateContact",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": {\r\n        \"first\": \"Ursuline\",\r\n        \"middle\": \"Lucita\",\r\n        \"last\": \"Dollimore\"\r\n    },\r\n    \"address\": {\r\n        \"street\": \"9040 Ronald Regan Trail\",\r\n        \"city\": \"Zephyrhills\",\r\n        \"state\": \"Florida\",\r\n        \"zip\": \"33543\"\r\n    },\r\n    \"phone\": [\r\n        {\r\n            \"number\": \"813-149-0180\",\r\n            \"type\": \"0\"\r\n        },\r\n        {\r\n            \"number\": \"899-465-1256\",\r\n            \"type\": \"1\"\r\n        },\r\n        {\r\n            \"number\": \"854-326-9835\",\r\n            \"type\": \"2\"\r\n        }\r\n    ], \r\n    \"email\": \"knoar3@behance.net\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/contacts/11",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"contacts",
+						"11"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteContact",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/contacts/11",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"contacts",
+						"11"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
