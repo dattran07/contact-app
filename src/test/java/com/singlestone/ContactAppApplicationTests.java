@@ -99,15 +99,14 @@ class ContactAppApplicationTests {
 		List<CallList> resultList = new ArrayList<>();
 		
 		for (Contact contact : sortedList) {
-			CallList callList = new CallList();
 			
 			for(Phone phone : contact.getPhone()) {
 				if (phone.getType().equals(Type.HOME) && StringUtils.isNotBlank(phone.getNumber())) {
+					CallList callList = new CallList();
 					callList.setPhone(phone.getNumber());
+					resultList.add(callList);
 				}
 			}
-			
-			resultList.add(callList);
 		}
 		
 		when(service.getCallList()).thenReturn(resultList);
