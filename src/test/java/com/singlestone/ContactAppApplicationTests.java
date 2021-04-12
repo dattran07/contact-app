@@ -99,7 +99,6 @@ class ContactAppApplicationTests {
 		List<CallList> resultList = new ArrayList<>();
 		
 		for (Contact contact : sortedList) {
-			
 			for(Phone phone : contact.getPhone()) {
 				if (phone.getType().equals(Type.HOME) && StringUtils.isNotBlank(phone.getNumber())) {
 					CallList callList = new CallList();
