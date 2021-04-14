@@ -36,7 +36,7 @@ class ContactAppApplicationTests {
 	private ContactService service;
 	
 	@Autowired
-	ContactUtil contactUtil;
+	private ContactUtil contactUtil;
 
 	@MockBean
 	private ContactRepository repository;
@@ -51,6 +51,7 @@ class ContactAppApplicationTests {
 	void getContactByIdTest() {
 		List<Contact> contactList = init();
 		Optional<Contact> contact = Optional.of(contactList.get(1));
+		
 		when(repository.findById(2)).thenReturn(contact);
 		assertEquals("Chris", contact.get().getName().getFirst());
 		assertEquals("Ohio", contact.get().getAddress().getState());
@@ -59,22 +60,20 @@ class ContactAppApplicationTests {
 	@Test
 	void createContactTest() {
 		Contact contact = createContact();
-		when(repository.save(contact)).thenReturn(contact);
+		when(service.createContact(contact)).thenReturn(contact);
 		assertEquals(contact, service.createContact(contact));
 	}
 	
 	@Test
 	void updateContactTest() {
 		List<Contact> contactList = init();
-		Contact contact = contactList.get(1);
+		Contact contact = createContact();
 		
-		Name name = new Name();
-		name.setFirst("Abigail");
-		name.setLast("Wands");
-		contact.setName(name);
+		when(repository.findById(2)).thenReturn(Optional.of(contactList.get(1)));
 		
-		when(repository.save(contact)).thenReturn(contact);
-		assertEquals("Abigail", contactList.get(1).getName().getFirst());
+		when(service.updateContact(2, contact)).thenReturn(contact);
+		assertEquals("Amber", contactList.get(1).getName().getFirst());
+		assertEquals("Pip", contactList.get(1).getName().getMiddle());
 		assertEquals("Wands", contactList.get(1).getName().getLast());
 	}
 	
