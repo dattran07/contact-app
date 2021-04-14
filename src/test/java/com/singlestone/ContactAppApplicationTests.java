@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,14 +18,12 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.singlestone.entity.Address;
-import com.singlestone.entity.CallList;
 import com.singlestone.entity.Contact;
 import com.singlestone.entity.Name;
 import com.singlestone.entity.Phone;
 import com.singlestone.entity.Phone.Type;
 import com.singlestone.repository.ContactRepository;
 import com.singlestone.service.ContactService;
-import com.singlestone.util.ContactUtil;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -35,9 +32,6 @@ class ContactAppApplicationTests {
 	@Autowired
 	private ContactService service;
 	
-	@Autowired
-	private ContactUtil contactUtil;
-
 	@MockBean
 	private ContactRepository repository;
 
@@ -50,17 +44,17 @@ class ContactAppApplicationTests {
 	@Test
 	void getContactByIdTest() {
 		List<Contact> contactList = init();
-		Optional<Contact> contact = Optional.of(contactList.get(1));
 		
-		when(repository.findById(2)).thenReturn(contact);
-		assertEquals("Chris", contact.get().getName().getFirst());
-		assertEquals("Ohio", contact.get().getAddress().getState());
+		when(repository.findById(2)).thenReturn(Optional.of(contactList.get(1)));
+		assertEquals("Chris", service.getContactById(2).getName().getFirst());
+		assertEquals("Ohio", service.getContactById(2).getAddress().getState());
 	}
 	
 	@Test
 	void createContactTest() {
 		Contact contact = createContact();
-		when(service.createContact(contact)).thenReturn(contact);
+		when(repository.save(contact)).thenReturn(contact);
+		
 		assertEquals(contact, service.createContact(contact));
 	}
 	
@@ -70,11 +64,9 @@ class ContactAppApplicationTests {
 		Contact contact = createContact();
 		
 		when(repository.findById(2)).thenReturn(Optional.of(contactList.get(1)));
-		
-		when(service.updateContact(2, contact)).thenReturn(contact);
-		assertEquals("Amber", contactList.get(1).getName().getFirst());
-		assertEquals("Pip", contactList.get(1).getName().getMiddle());
-		assertEquals("Wands", contactList.get(1).getName().getLast());
+		assertEquals(contactList.get(1), service.updateContact(2, contact));
+		assertEquals("Amber", service.updateContact(2, contact).getName().getFirst());
+		assertEquals("Chicago", service.updateContact(2, contact).getAddress().getCity());
 	}
 	
 	@Test
@@ -89,27 +81,19 @@ class ContactAppApplicationTests {
 	
 	@Test
 	void getCallListTest() {
+		
 		List<Contact> filteredList = init().stream()
 				.filter(c -> c.getPhone().stream()
 						.anyMatch(p -> p.getType().equals(Type.HOME)))
 				.collect(Collectors.toList());
 		
-		List<Contact> sortedList = contactUtil.sortNames(filteredList);
-		List<CallList> resultList = new ArrayList<>();
+		when(repository.findAll().stream()
+				.filter(c -> c.getPhone().stream()
+						.anyMatch(p -> p.getType().equals(Type.HOME)))
+				.collect(Collectors.toList())).thenReturn(filteredList);
 		
-		for (Contact contact : sortedList) {
-			for(Phone phone : contact.getPhone()) {
-				if (phone.getType().equals(Type.HOME) && StringUtils.isNotBlank(phone.getNumber())) {
-					CallList callList = new CallList();
-					callList.setPhone(phone.getNumber());
-					resultList.add(callList);
-				}
-			}
-		}
-		
-		when(service.getCallList()).thenReturn(resultList);
-		assertEquals("654-234-6521", resultList.get(0).getPhone());
-		assertEquals("982-342-1375", resultList.get(1).getPhone());
+		assertEquals("654-234-6521", service.getCallList().get(0).getPhone());
+		assertEquals("982-342-1375", service.getCallList().get(1).getPhone());
 	}
 	
 	public List<Contact> init() {
